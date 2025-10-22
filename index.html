@@ -1,82 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-M">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OG Weekend 2026</title>
+    <!-- We're using Tailwind CSS for styling, loaded from a CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- We're using Lucide for icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Configuration for Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#004a99',
+                            dark: '#003366',
+                        },
+                        light: '#f4f4f4',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Link to our local CSS file -->
     <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Simple icon replacement class for lucide */
+        .icon {
+            display: inline-block;
+            width: 1.25em;
+            height: 1.25em;
+            stroke-width: 2;
+            vertical-align: middle;
+        }
+
+        /* --- Itinerary Timeline --- */
+        .itinerary-day {
+            position: relative;
+            /* Make room for the timeline dots and line */
+            padding-left: 2.5rem; 
+        }
+
+        /* The 'dot' for each day's stop */
+        .itinerary-day::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            /* Aligns with the top of the h4 heading */
+            top: 0.35rem; 
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: #fff;
+            /* Use the primary color for the border */
+            border: 4px solid #004a99; 
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        /* The dotted line connecting the days */
+        .itinerary-day::after {
+            content: '';
+            position: absolute;
+            /* Centered with the dot */
+            left: 0.525rem; 
+            /* Start below the dot */
+            top: 1.6rem; 
+            /* Extend down past the bottom padding */
+            bottom: -1.5rem; 
+            width: 3px;
+            /* Create a dashed line using a gradient */
+            background-image: linear-gradient(to bottom, #004a99 60%, transparent 40%);
+            background-size: 100% 10px; /* 10px dash/gap */
+            background-repeat: repeat-y;
+            opacity: 0.4;
+            z-index: 5;
+        }
+
+        /* Hide the connecting line on the last day */
+        .itinerary-day:last-child::after {
+            display: none;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>OG Weekend 2026</h1>
-        <p class="dates">February 5th - February 8th, 2026</p>
+<body class="bg-gray-50 text-gray-700">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-primary-DEFAULT to-primary-dark text-white p-8 text-center shadow-lg">
+        <h1 class="text-4xl md:text-5xl font-bold mb-2">OG Weekend 2026</h1>
+        <p class="text-xl md:text-2xl opacity-90">February 5th - February 8th, 2026</p>
     </header>
 
-    <main class="container">
-        <section class="card">
-            <h2>Booking Information</h2>
-            
-            <div class="booking-item">
-                <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M19 16.5A2.5 2.5 0 0 0 21.5 14A2.5 2.5 0 0 0 19 11.5A2.5 2.5 0 0 0 16.5 14A2.5 2.5 0 0 0 19 16.5M19 18A4 4 0 0 1 15 14A4 4 0 0 1 19 10A4 4 0 0 1 23 14A4 4 0 0 1 19 18M14.5 9.5A3.5 3.5 0 0 0 11 6A3.5 3.5 0 0 0 7.5 9.5A3.5 3.5 0 0 0 11 13A3.5 3.5 0 0 0 14.5 9.5M11 11A1.5 1.5 0 0 1 9.5 9.5A1.5 1.5 0 0 1 11 8A1.5 1.5 0 0 1 12.5 9.5A1.5 1.5 0 0 1 11 11M16 6H6V17.5A3.5 3.5 0 0 1 2.5 21H6.1A5.5 5.5 0 0 0 11 23A5.5 5.5 0 0 0 15.9 21H18A2 2 0 0 0 20 19V6A2 2 0 0 0 18 4H16V6M18 19H15.9A5.5 5.5 0 0 0 11 21A5.5 5.5 0 0 0 6.1 19H4.5A1.5 1.5 0 0 0 6 17.5V8H18V19Z" /></svg> Lodging</h3>
-                <p><strong>Airbnb in Montgomery</strong></p>
-                <a href="https://www.airbnb.com/rooms/626832094255090711" target="_blank" class="button">View Airbnb Listing</a>
-            </div>
+    <!-- Main Content Area -->
+    <main class="max-w-4xl mx-auto p-4 md:p-8">
 
-            <div class="booking-item">
-                <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="icon"><path d="M21.92,11.6C21.32,11 20.22,10.28 19,10.05L19,3.5C19,2.67 18.33,2 17.5,2H16V10.05C14.78,10.28 13.68,11 13.08,11.6C12.4,12.29 12,13.29 12,14.5C12,15.71 12.4,16.71 13.08,17.4C13.68,18 14.78,18.72 16,18.95V22H17.5C18.33,22 19,21.33 19,20.5V18.95C20.22,18.72 21.32,18 21.92,17.4C22.6,16.71 23,15.71 23,14.5C23,13.29 22.6,12.29 21.92,11.6M17.5,16.5H16V12.5H17.5V16.5M5,10L8.5,3H11V10L10,8.5L7.5,10L6,8.5L5,10Z" /></svg> Flights</h3>
-                <p><strong>Arrival (2/5):</strong> American Eagle 5017</p>
-                <p><strong>Departure (2/8):</strong> American Eagle 5077</p>
+        <!-- Booking Information Card -->
+        <section class="bg-white rounded-lg shadow-lg mb-12 overflow-hidden transition-all duration-300 hover:shadow-2xl">
+            <div class="p-6 md:p-8">
+                <h2 class="text-3xl font-semibold mb-6 pb-4 border-b border-gray-200 text-primary-DEFAULT">
+                    Booking Information
+                </h2>
+                
+                <!-- Lodging -->
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center">
+                        <i data-lucide="home" class="icon mr-3 text-primary-DEFAULT"></i>
+                        Lodging
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-4"><strong>Airbnb in Montgomery</strong></p>
+                    <a href="https://www.airbnb.com/rooms/626832094255090711" target="_blank" class="inline-flex items-center bg-blue-100 text-primary-dark font-bold py-3 px-6 rounded-lg shadow-sm hover:bg-blue-200 transition-all duration-300 ease-in-out">
+                        <i data-lucide="link-2" class="icon mr-2"></i>
+                        View Airbnb Listing
+                    </a>
+                </div>
+
+                <!-- Flights -->
+                <div class="mb-6">
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center">
+                        <i data-lucide="plane" class="icon mr-3 text-primary-DEFAULT"></i>
+                        Flights
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-lg text-gray-700 font-semibold">Arrival (2/5):</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Flight:</strong> AA 5017</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Departs DFW:</strong> 11:00 AM</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Arrives MGM:</strong> 12:55 PM</p>
+                        </div>
+                        <div>
+                            <p class="text-lg text-gray-700 font-semibold">Departure (2/8):</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Flight:</strong> AA 5077</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Departs MGM:</strong> 1:25 PM</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Arrives DFW:</strong> 3:50 PM</p>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <a href="https://www.google.com/travel/flights/booking?tfs=CBwQAhpFEgoyMDI2LTAyLTA1IiAKA0RGVxIKMjAyNi0wMi0wNRoDTUdNKgJBQTIENTAxN2oMCAISCC9tLzBmMnJxcgcIARIDTUdNGkUSCjIwMjYtMDItMDgiIAoDTUdNEgoyMDI2LTAyLTA4GgNERlcqAkFBMgQ1MDc3agcIARIDTUdNcgwIAhIIL20vMGYycnFAAUgBcAGCAQsI____________AZgBAQ&tfu=CmxDalJJU1hBeWJWTTFWWEIwVXpoQlFXWmhibEZDUnkwdExTMHRMUzB0TFc5NVkyMDBNa0ZCUVVGQlIybzFWVkZKVGt4SVYyTkJFZ1pCUVRVd056Y2FDd2l4MEFJUUFob0RWVk5FT0J4d3NkQUMSBggAIAEoAiIGCgEwCgEx&hl=en&gl=US&curr=USD" target="_blank" class="inline-flex items-center bg-blue-100 text-primary-dark font-bold py-3 px-6 rounded-lg shadow-sm hover:bg-blue-200 transition-all duration-300 ease-in-out">
+                            <i data-lucide="link-2" class="icon mr-2"></i>
+                            View Google Flights Booking
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Car Rental -->
+                <div>
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center">
+                        <i data-lucide="car" class="icon mr-3 text-primary-DEFAULT"></i>
+                        Car Rental
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="text-lg text-gray-700 font-semibold">Vehicle:</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Enterprise:</strong> 7-Passenger Mini-Van</p>
+                            <p class="text-lg text-gray-700 pl-4">(Chrysler Pacifica or similar)</p>
+                            <p class="text-lg text-gray-700 pl-4"><strong class="text-primary-dark">Confirmation:</strong> 1588667854</p>
+                        </div>
+                        <div>
+                            <p class="text-lg text-gray-700 font-semibold">Pick-up (2/5):</p>
+                            <p class="text-lg text-gray-700 pl-4">3:30 PM @ MGM Airport</p>
+                            <p class="text-lg text-gray-700 font-semibold mt-2">Drop-off (2/8):</p>
+                            <p class="text-lg text-gray-700 pl-4">11:00 AM @ MGM Airport</p>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <a href="https://mail.google.com/mail/u/1/#inbox/FMfcgzQcqQzRTCHKFPRTPgbVCWjtzxWT" target="_blank" class="inline-flex items-center bg-blue-100 text-primary-dark font-bold py-3 px-6 rounded-lg shadow-sm hover:bg-blue-200 transition-all duration-300 ease-in-out">
+                            <i data-lucide="mail" class="icon mr-2"></i>
+                            View Confirmation Email
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </section>
 
-        <section class="card">
-            <h2>Itinerary</h2>
-            
-            <div class="itinerary-day">
-                <h4>Thursday, Feb 5</h4>
-                <ul>
-                    <li>Arrive in Montgomery (MGM)</li>
-                    <li>Pick up groceries</li>
-                    <li>Head to Airbnb and get settled</li>
-                    <li>Go to dinner</li>
-                    <li>Watch Mavericks vs. Spurs @ 7:30 PM</li>
-                </ul>
-            </div>
+        <!-- Itinerary Card -->
+        <section class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl">
+            <!-- Add 'relative' class here to contain the timeline elements -->
+            <div class="p-6 md:p-8 relative">
+                <h2 class="text-3xl font-semibold mb-6 pb-4 border-b border-gray-200 text-primary-DEFAULT">
+                    Itinerary
+                </h2>
+                
+                <!-- Thursday -->
+                <div class="itinerary-day mb-6 pb-6 border-b border-gray-200">
+                    <h4 class="text-2xl font-semibold mb-3 text-gray-900">Thursday, Feb 5</h4>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li>Arrive in Montgomery (MGM) @ 12:55 PM</li>
+                        <li>Pick up groceries</li>
+                        <li>Head to Airbnb and get settled</li>
+                        <li>Go to dinner</li>
+                        <li>Watch Mavericks vs. Spurs @ 7:30 PM -- Will Kyrie be back?!</li>
+                    </ul>
+                    
+                    <!-- Thursday Images -->
+                    <div class="mt-4 space-y-4">
+                        <!-- Airbnb Images -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <img src="https://a0.muscache.com/im/pictures/miso/Hosting-626832094255090711/original/81adfabb-b218-4c02-8afd-7b5a2d7e253a.jpeg?im_w=1440" 
+                                alt="View of the Airbnb" 
+                                class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">    
+                            <img src="https://a0.muscache.com/im/pictures/371927eb-42d2-465b-8d41-9a1c92106612.jpg?im_w=1440" 
+                                alt="View of Airbnb2" 
+                                class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">
+                        </div>
+                        <!-- Mavs Images -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <img src="https://images2.minutemediacdn.com/image/upload/c_crop,x_1170,y_0,w_4520,h_2542/c_fill,w_680,ar_16:9,f_auto,q_auto,g_auto/images/ImagnImages/mmsport/dallas_basketball/01k84q2r3jyreb94kfpg.jpg" 
+                                alt="View of the Dallas Mavs" 
+                                class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">    
+                            <img src="https://www.vmcdn.ca/f/files/shared/feeds/cp/2024/03/20240317180328-65f76ef1f3c80c0a0c027409jpeg.jpg;w=1200;h=800;mode=crop" 
+                                alt="View of Kyrie Game Winner" 
+                                class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                                onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">
+                        </div>
+                    </div>
+                </div>
 
-            <div class="itinerary-day">
-                <h4>Friday, Feb 6</h4>
-                <ul>
-                    <li><strong>Morning:</strong> Head to Capitol Hill (Robert Trent Jones Golf)</li>
-                    <li>Play 36 holes (1 round at Legislator, 1 round at Senator)</li>
-                    <li><strong>Evening:</strong> Go back to the Airbnb, make dinner, and hang out</li>
-                </ul>
-            </div>
+                <!-- Friday -->
+                <div class="itinerary-day mb-6 pb-6 border-b border-gray-200">
+                    <h4 class="text-2xl font-semibold mb-3 text-gray-900">Friday, Feb 6</h4>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li><strong>Morning:</strong> Head to Capitol Hill (Robert Trent Jones Golf)</li>
+                        <li>Play 36 holes (1 round at Legislator, 1 round at Senator)</li>
+                        <li><strong>Evening:</strong> Go back to the Airbnb, make dinner, and hang out</li>
+                    </ul>
+                    <!-- Friday Golf Images -->
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <img src="https://www.rtjgolf.com/img/sm-ch-s.jpg" 
+                             alt="View of the Senator Course" 
+                             class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                             onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">
+                        <img src="https://www.rtjgolf.com/img/sm-ch-l.jpg" 
+                             alt="View of the Legislator Course" 
+                             class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                             onerror="this.src='httpsG00/400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">
+                    </div>
+                </div>
 
-            <div class="itinerary-day">
-                <h4>Saturday, Feb 7</h4>
-                <ul>
-                    <li><strong>Morning:</strong> Head to Capitol Hill (Robert Trent Jones Golf)</li>
-                    <li>Play 36 holes (1 round at Legislator, 1 round at Senator)</li>
-                    <li><strong>Evening:</strong> Go back to the Airbnb, make dinner, and hang out</li>
-                </ul>
-            </div>
+                <!-- Saturday -->
+                <div class="itinerary-day mb-6 pb-6 border-b border-gray-200">
+                    <h4 class="text-2xl font-semibold mb-3 text-gray-900">
+                        Saturday, Feb 7 
+                        <span class="text-lg font-normal text-gray-500 italic ml-2">-- Rinse and Repeat, baby</span>
+                    </h4>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li><strong>Morning:</strong> Head to Capitol Hill (Robert Trent Jones Golf)</li>
+                        <li>Play 36 holes (1 round at Legislator, 1 round at Senator)</li>
+                        <li><strong>Evening:</strong> Go back to the Airbnb, make dinner, and hang out</li>
+                    </ul>
+                    <!-- Saturday Golf Images -->
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <img src="https://www.rtjgolf.com/img/sm-ch-s.jpg" 
+                             alt="View of the Senator Course" 
+                             class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                             onerror="this.src='https://placehold.co/600x400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">
+                        <img src="https://www.rtjgolf.com/img/sm-ch-l.jpg" 
+                             alt="View of the Legislator Course" 
+                             class="w-full h-auto rounded-lg shadow-md aspect-video object-cover transition-transform duration-300 ease-in-out hover:scale-105"
+                             onerror="this.src='httpsall.co/600/400/eeeeee/999999?text=Replace+Image+URL'; this.onerror=null;">
+                    </div>
+                </div>
 
-            <div class="itinerary-day">
-                <h4>Sunday, Feb 8</h4>
-                <ul>
-                    <li>Make breakfast at the Airbnb</li>
-                    <li>Pack up and leave for the airport</li>
-                    <li>Head home!</li>
-                </ul>
-            </div>
+                <!-- Sunday -->
+                <div class="itinerary-day mb-6">
+                    <h4 class="text-2xl font-semibold mb-3 text-gray-900">Sunday, Feb 8</h4>
+                    <ul class="list-disc list-inside text-lg text-gray-700 space-y-2">
+                        <li>Make breakfast at the Airbnb</li>
+                        <li>Pack up and leave for the airport</li>
+                        <li>Head home!</li>
+                    </ul>
+                </div>
 
+            </div>
         </section>
     </main>
 
-    <footer>
+    <!-- Footer -->
+    <footer class="text-center p-8 text-gray-600">
         <p>See you in Montgomery!</p>
     </footer>
-
-    <script src="script.js"></script>
+    
+    <!-- This script finds all `data-lucide` icons and renders them -->
+    <script>
+      lucide.createIcons();
+    </script>
 </body>
 </html>
+
+
+
+
