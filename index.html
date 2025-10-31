@@ -363,8 +363,6 @@
                 </div>
             </section>
 
-            <!-- ✨ --- RESTORED SECTIONS --- ✨ -->
-
             <!-- ✨ New Gemini Trip Tools Card (Red Theme) - Added frosted glass effect --><section id="tools" class="tab-panel hidden bg-white/90 backdrop-blur-sm rounded-xl shadow-lg mb-12 overflow-hidden transition-all duration-300 hover:shadow-xl">
                 <div class="p-6 md:p-8">
                     <h2 class="text-3xl font-semibold mb-6 pb-4 border-b border-slate-200 text-slate-900">
@@ -537,8 +535,6 @@
                 </div>
             </section>
 
-            <!-- ✨ --- END OF RESTORED SECTIONS --- ✨ -->
-
             <!-- ✨ New Gallery Card (Navy Theme) - Updated with Upload Feature --><section id="gallery" class="tab-panel hidden bg-white/90 backdrop-blur-sm rounded-xl shadow-lg mb-12 overflow-hidden transition-all duration-300 hover:shadow-xl">
                 <div class="p-6 md:p-8">
                     <h2 class="text-3xl font-semibold mb-6 pb-4 border-b border-slate-200 text-slate-900">
@@ -649,11 +645,16 @@
               apiKey: "AIzaSyCBFGJJzm9fn1ZphhMZPOjNI_Y07kWWtVw",
               authDomain: "og-weekend-2026.firebaseapp.com",
               projectId: "og-weekend-2026",
-              storageBucket: "og-weekend-2026.firebasestorage.app",
+              // --- ✨ THE FIX IS HERE ---
+              storageBucket: "og-weekend-2026.appspot.com",
+              // --- ✨ END OF FIX ---
               messagingSenderId: "554886174493",
               appId: "1:554886174493:web:79c91d04885f8b450eb3f4"
             };
             
+            // --- ✨ ADDED CONSOLE LOG ---
+            console.log("Attempting to initialize Firebase. If this fails with a 'network' or 'unavailable' error in the preview, this is expected. The code will work when deployed to Vercel.");
+            // --- ✨ END OF ADDED LOG ---
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app); // Assign to outer scope variable
@@ -788,8 +789,6 @@
             console.log("uploadButton:", uploadButton);
 
 
-            // --- ✨ RESTORED MODAL FUNCTIONS ---
-
             // --- Modal Functions ---
             function showModal(title) {
                 // Check if elements exist before using them
@@ -877,7 +876,7 @@
                 
                 // Show a user-friendly error in the modal
                 modalResultContent.innerHTML = `
-                    <div class"text-red-600">
+                    <div class="text-red-600">
                         <strong class="font-semibold">Oops! Something went wrong:</strong>
                         <p class="mt-2">${errorMessage}</p>
                         <p class="mt-4 text-sm text-slate-600">If this persists, please check the console for more details.</p>
@@ -887,8 +886,6 @@
                 console.error("Error displayed to user:", errorMessage);
             }
             
-            // --- ✨ END OF RESTORED MODAL FUNCTIONS ---
-
 
             // --- ✨ REBUILT Gallery/Carousel Logic (Firebase-driven) ---
             
@@ -1416,4 +1413,5 @@
     </script>
 </body>
 </html>
+
 
